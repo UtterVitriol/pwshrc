@@ -1,7 +1,7 @@
 ##################
 # Init oh-my-posh
 ##################
-oh-my-posh init pwsh --config 'C:\Users\ProVaper\AppData\Local\Programs\oh-my-posh\themes\tokyo.omp.json' | Invoke-Expression
+oh-my-posh init pwsh --config '$env:LocalAppData\Programs\oh-my-posh\themes\tokyo.omp.json' | Invoke-Expression
 
 ##################
 # Ctrl+RightArrow adds one word from suggestion.
