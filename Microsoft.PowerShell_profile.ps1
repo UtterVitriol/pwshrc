@@ -68,6 +68,9 @@ Set-PSReadLineKeyHandler -Chord Ctrl+o -ScriptBlock {
 # ls -la
 Set-Alias -Name ll -Value get-childitem
 
+# wc
+Set-Alias -Name wc -Value Measure-Object
+
 # Move to recycle bin instead of delete
 Set-Alias -Name trash -Value Remove-ItemSafely
 
