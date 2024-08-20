@@ -23,7 +23,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+RightArrow -ScriptBlock {
 Set-PSReadLineKeyHandler -Key Ctrl+u -Function BackwardDeleteLine
 
 ##################
-# What can I say? I'm lazy.
+# ls -l
 ##################
 Function NoHidden { 
   param(
@@ -47,6 +47,7 @@ Set-Alias -name devsh -value MyDevx64
 # that lf was last on when quit
 ##################
 function lfcd{
+  # lf keybind zh shows hidden files.
   lf -print-last-dir $args | Set-Location
 }
 
@@ -59,7 +60,9 @@ Set-PSReadLineKeyHandler -Chord Ctrl+o -ScriptBlock {
 ##################
 # Random Aliases
 ##################
+# ls -la
 set-alias -name ll -value get-childitem
+# Move to recycle bin instead of delete
 Set-Alias -name trash -value Remove-ItemSafely
 
 # Import the Chocolatey Profile that contains the necessary code to enable
