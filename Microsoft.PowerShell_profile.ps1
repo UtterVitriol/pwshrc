@@ -1,5 +1,11 @@
+##################
+# Init oh-my-posh
+##################
 oh-my-posh init pwsh --config 'C:\Users\ProVaper\AppData\Local\Programs\oh-my-posh\themes\tokyo.omp.json' | Invoke-Expression
 
+##################
+# Ctrl+RightArrow adds one word from suggestion.
+##################
 Set-PSReadLineKeyHandler -Key Ctrl+RightArrow -ScriptBlock {
   param($key, $arg)
   $line = $null
@@ -11,8 +17,14 @@ Set-PSReadLineKeyHandler -Key Ctrl+RightArrow -ScriptBlock {
   else { [Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord($key, $arg) }
 }
 
+##################
+# Similar to bash ctrl+u.
+##################
 Set-PSReadLineKeyHandler -Key Ctrl+u -Function BackwardDeleteLine
 
+##################
+# What can I say? I'm lazy.
+##################
 Function NoHidden { 
   param(
     [string[]]$path
@@ -21,12 +33,19 @@ Function NoHidden {
 }
 set-alias -name l -value NoHidden
 
+##################
+# Alias that activates the vs developer shell
+##################
 function MyDevx64 {
  &{ Import-Module "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";
   Enter-VsDevShell 7eee0d47 -SkipAutomaticLocation -DevCmdArguments "-arch=x64 -host_arch=x64";}
 }
 Set-Alias -name devsh -value MyDevx64
 
+##################
+# Sets function and chord that changes to the directory
+# that lf was last on when quit
+##################
 function lfcd{
   lf -print-last-dir $args | Set-Location
 }
@@ -37,6 +56,9 @@ Set-PSReadLineKeyHandler -Chord Ctrl+o -ScriptBlock {
          [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
+##################
+# Random Aliases
+##################
 set-alias -name ll -value get-childitem
 Set-Alias -name trash -value Remove-ItemSafely
 
@@ -50,4 +72,7 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
+##################
+# I'm cool.
+##################
 fastfetch
