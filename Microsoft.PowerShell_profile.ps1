@@ -17,7 +17,7 @@ Function NoHidden {
   param(
     [string[]]$path
   )
-  Get-ChildItem $path -exclude .* 
+  Get-ChildItem $path | where {$_.Name -NotLike ".*"}
 }
 set-alias -name l -value NoHidden
 
