@@ -18,6 +18,11 @@ Set-PSReadLineKeyHandler -Key Ctrl+RightArrow -ScriptBlock {
 }
 
 ##################
+# Ctrl+y Accepts whole suggestion.
+##################
+Set-PSReadLineKeyHandler -Key Ctrl+y -Function AcceptSuggestion
+
+##################
 # Similar to bash ctrl+u.
 ##################
 Set-PSReadLineKeyHandler -Key Ctrl+u -Function BackwardDeleteLine
