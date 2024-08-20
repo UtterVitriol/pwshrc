@@ -66,9 +66,15 @@ Set-PSReadLineKeyHandler -Chord Ctrl+o -ScriptBlock {
 # Random Aliases
 ##################
 # ls -la
-set-alias -name ll -value get-childitem
+Set-Alias -Name ll -Value get-childitem
+
 # Move to recycle bin instead of delete
-Set-Alias -name trash -value Remove-ItemSafely
+Set-Alias -Name trash -Value Remove-ItemSafely
+
+# WinDbg
+Set-Alias -Name windbg -Value "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe"
+Set-Alias -Name windbg86 -Value "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe"
+
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
