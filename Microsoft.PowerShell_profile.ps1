@@ -86,6 +86,9 @@ Set-Alias -Name windbg86 -Value "C:\Program Files (x86)\Windows Kits\10\Debugger
 #nvim
 Set-Alias -Name vim -Value nvim
 
+# touch
+Set-Alias -Name touch -Value New-Item
+
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
