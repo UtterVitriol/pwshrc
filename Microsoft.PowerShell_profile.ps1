@@ -89,6 +89,9 @@ Set-Alias -Name vim -Value nvim
 # touch
 Set-Alias -Name touch -Value New-Item
 
+# devenv because I'm lazy
+Set-Alias -Name vs -Value devenv
+
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
