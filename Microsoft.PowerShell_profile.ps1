@@ -46,8 +46,7 @@ set-alias -name l -value NoHidden
 ##################
 function MyDevx64
 {
-  &{ Import-Module "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";
-    Enter-VsDevShell 7eee0d47 -SkipAutomaticLocation -DevCmdArguments "-arch=x64 -host_arch=x64";}
+  & "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\Launch-VsDevShell.ps1" -SkipAutomaticLocation
 }
 Set-Alias -name devsh -value MyDevx64
 
