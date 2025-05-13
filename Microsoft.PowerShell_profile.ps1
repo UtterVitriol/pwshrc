@@ -15,7 +15,8 @@ Set-PSReadLineKeyHandler -Key Ctrl+RightArrow -ScriptBlock {
   {
     [Microsoft.PowerShell.PSConsoleReadLine]::ForwardWord($key, $arg)
   } else
-  { [Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord($key, $arg) 
+  {
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord($key, $arg) 
   }
 }
 
@@ -28,18 +29,6 @@ Set-PSReadLineKeyHandler -Key Ctrl+y -Function AcceptSuggestion
 # Similar to bash ctrl+u.
 ##################
 Set-PSReadLineKeyHandler -Key Ctrl+u -Function BackwardDeleteLine
-
-##################
-# ls -l
-##################
-Function NoHidden
-{ 
-  param(
-    [string[]]$path
-  )
-  Get-ChildItem $path | Where-Object {$_.Name -NotLike ".*"}
-}
-set-alias -name l -value NoHidden
 
 ##################
 # Alias that activates the vs developer shell
@@ -69,8 +58,29 @@ Set-PSReadLineKeyHandler -Chord Ctrl+o -ScriptBlock {
 ##################
 # Random Aliases
 ##################
+
+# firefox
+Set-Alias -Name firefox -Value "C:\Program Files\Mozilla Firefox\firefox.exe"
+
+# ls -l
+Function NoHidden
+{ 
+  param(
+    [string[]]$path
+  )
+  Get-ChildItem $path | Where-Object { $_.Name -NotLike ".*" }
+}
+set-alias -name l -value NoHidden
+
 # ls -la
-Set-Alias -Name ll -Value get-childitem
+Function Hidden
+{
+  param(
+    [string[]]$path
+  )
+  Get-ChildItem -Force $path
+}
+Set-Alias -Name ll -Value Hidden
 
 # wc
 Set-Alias -Name wc -Value Measure-Object
@@ -88,9 +98,9 @@ Set-Alias -Name vim -Value nvim
 # touch
 Set-Alias -Name touch -Value New-Item
 
-# devenv because I'm lazy
 Set-Alias -Name vs -Value devenv
 
+Set-Alias -Name ghidra -Value "C:\Program Files\Ghidra\ghidraRun.bat"
 
 # Import the Chocolatey Profile that contains the necessary code to enable
 # tab-completions to function for `choco`.
@@ -102,8 +112,3 @@ if (Test-Path($ChocolateyProfile))
 {
   Import-Module "$ChocolateyProfile"
 }
-
-##################
-# I'm cool.
-##################
-fastfetch
