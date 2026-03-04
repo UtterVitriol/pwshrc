@@ -1,29 +1,35 @@
 ##################
-# Init oh-my-posh
+# Change the directories to be blue text instead of highlighted blue
 ##################
-oh-my-posh init pwsh --config "$env:LocalAppData\Programs\oh-my-posh\themes\tokyo.omp.json" | Invoke-Expression
+$PSStyle.FileInfo.Directory = "`e[38;2;97;175;239m"
 
 ##################
 # Ctrl+RightArrow adds one word from suggestion.
 ##################
 Set-PSReadLineKeyHandler -Key Ctrl+RightArrow -ScriptBlock {
-  param($key, $arg)
-  $line = $null
-  $cursor = $null
-  [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
-  if ($cursor -lt $line.Length)
-  {
-    [Microsoft.PowerShell.PSConsoleReadLine]::ForwardWord($key, $arg)
-  } else
-  {
-    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord($key, $arg) 
-  }
+    param($key, $arg)
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+    if ($cursor -lt $line.Length)
+    {
+        [Microsoft.PowerShell.PSConsoleReadLine]::ForwardWord($key, $arg)
+    } else
+    {
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord($key, $arg) 
+    }
 }
 
 ##################
 # Ctrl+y Accepts whole suggestion.
 ##################
 Set-PSReadLineKeyHandler -Key Ctrl+y -Function AcceptSuggestion
+
+##################
+# Ctrl+y Accepts next suggestion.
+##################
+Set-PSReadLineKeyHandler -Key Ctrl+n -Function AcceptNextSuggestionWord
+
 
 ##################
 # Similar to bash ctrl+u.
@@ -35,7 +41,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+u -Function BackwardDeleteLine
 ##################
 function MyDevx64
 {
-  & "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\Tools\Launch-VsDevShell.ps1" -SkipAutomaticLocation
+    & "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\Tools\Launch-VsDevShell.ps1" -SkipAutomaticLocation
 }
 Set-Alias -name devsh -value MyDevx64
 
@@ -45,14 +51,14 @@ Set-Alias -name devsh -value MyDevx64
 ##################
 function lfcd
 {
-  # lf keybind zh shows hidden files.
-  lf -print-last-dir $args | Set-Location
+    # lf keybind zh shows hidden files.
+    lf -print-last-dir $args | Set-Location
 }
 
 Set-PSReadLineKeyHandler -Chord Ctrl+o -ScriptBlock {
-  [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
-  [Microsoft.PowerShell.PSConsoleReadLine]::Insert('lfcd')
-  [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert('lfcd')
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
 ##################
@@ -65,20 +71,20 @@ Set-Alias -Name firefox -Value "C:\Program Files\Mozilla Firefox\firefox.exe"
 # ls -l
 Function NoHidden
 { 
-  param(
-    [string[]]$path
-  )
-  Get-ChildItem $path | Where-Object { $_.Name -NotLike ".*" }
+    param(
+        [string[]]$path
+    )
+    Get-ChildItem $path | Where-Object { $_.Name -NotLike ".*" }
 }
 set-alias -name l -value NoHidden
 
 # ls -la
 Function Hidden
 {
-  param(
-    [string[]]$path
-  )
-  Get-ChildItem -Force $path
+    param(
+        [string[]]$path
+    )
+    Get-ChildItem -Force $path
 }
 Set-Alias -Name ll -Value Hidden
 
@@ -92,9 +98,6 @@ Set-Alias -Name trash -Value Remove-ItemSafely
 Set-Alias -Name windbg -Value "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe"
 Set-Alias -Name windbg86 -Value "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe"
 
-#nvim
-Set-Alias -Name vim -Value nvim
-
 # touch
 Set-Alias -Name touch -Value New-Item
 
@@ -102,13 +105,7 @@ Set-Alias -Name vs -Value devenv
 
 Set-Alias -Name ghidra -Value "C:\Program Files\Ghidra\ghidraRun.bat"
 
-# Import the Chocolatey Profile that contains the necessary code to enable
-# tab-completions to function for `choco`.
-# Be aware that if you are missing these lines from your profile, tab completion
-# for `choco` will not function.
-# See https://ch0.co/tab-completion for details.
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile))
-{
-  Import-Module "$ChocolateyProfile"
-}
+##################
+# Init oh-my-posh
+##################
+oh-my-posh init pwsh --config "$home\.config\tokyo.omp.json" | Invoke-Expression

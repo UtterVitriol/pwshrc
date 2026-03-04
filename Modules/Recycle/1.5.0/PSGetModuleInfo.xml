@@ -24,9 +24,9 @@
         </LST>
       </Obj>
       <S N="Copyright">(c) 2022 Engage Software</S>
-      <DT N="PublishedDate">2022-07-29T18:24:20-04:00</DT>
+      <DT N="PublishedDate">1900-01-01T00:00:00-05:00</DT>
       <Obj N="InstalledDate" RefId="2">
-        <DT>2024-08-19T17:24:07.9008967-04:00</DT>
+        <DT>2025-12-07T18:09:58.5970237-05:00</DT>
         <MS>
           <Obj N="DisplayHint" RefId="3">
             <TN RefId="2">
@@ -60,19 +60,11 @@
         </TN>
         <DCT>
           <En>
-            <S N="Key">RoleCapability</S>
+            <S N="Key">Workflow</S>
             <Obj N="Value" RefId="6">
               <TNRef RefId="1" />
               <LST />
             </Obj>
-          </En>
-          <En>
-            <S N="Key">Workflow</S>
-            <Ref N="Value" RefId="6" />
-          </En>
-          <En>
-            <S N="Key">Cmdlet</S>
-            <Ref N="Value" RefId="6" />
           </En>
           <En>
             <S N="Key">DscResource</S>
@@ -88,6 +80,14 @@
                 <S>Get-RecycledItem</S>
               </LST>
             </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="6" />
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Ref N="Value" RefId="6" />
           </En>
           <En>
             <S N="Key">Function</S>
@@ -121,17 +121,18 @@
           <S N="description">Deletes the file or folder as if it had been done via File Explorer, or restores a deleted file from the recycle bin.</S>
           <S N="requireLicenseAcceptance">False</S>
           <S N="releaseNotes">https://github.com/bdukes/PowerShellModules/blob/main/CHANGES.md</S>
-          <S N="isLatestVersion">True</S>
-          <S N="isAbsoluteLatestVersion">True</S>
-          <S N="versionDownloadCount">67549</S>
-          <S N="downloadCount">104537</S>
+          <S N="isLatestVersion">False</S>
+          <S N="isAbsoluteLatestVersion">False</S>
+          <S N="versionDownloadCount">163000</S>
+          <S N="downloadCount">200204</S>
           <S N="packageSize">6610</S>
-          <S N="published">7/29/2022 6:24:20 PM -04:00</S>
-          <S N="created">7/29/2022 6:24:20 PM -04:00</S>
-          <S N="lastUpdated">8/19/2024 9:20:00 PM -04:00</S>
+          <S N="published">1/1/1900 00:00:00 -05:00</S>
+          <S N="created">7/29/2022 18:24:20 -04:00</S>
+          <S N="lastEdited">9/30/2024 14:01:25 -04:00</S>
+          <S N="lastUpdated">12/7/2025 06:40:00 -05:00</S>
           <S N="tags">PSEdition_Core PSEdition_Desktop Windows PSModule PSFunction_Remove-ItemSafely PSCommand_Remove-ItemSafely PSFunction_Restore-RecycledItem PSCommand_Restore-RecycledItem PSFunction_Get-RecycledItem PSCommand_Get-RecycledItem PSIncludes_Function</S>
           <S N="developmentDependency">False</S>
-          <S N="updated">2024-08-19T21:20:00Z</S>
+          <S N="updated">2025-12-07T06:40:00Z</S>
           <S N="NormalizedVersion">1.5.0</S>
           <S N="Authors">Brian Dukes</S>
           <S N="IsPrerelease">false</S>
@@ -141,7 +142,7 @@
           <S N="CompanyName">Engage Software</S>
         </MS>
       </Obj>
-      <S N="InstalledLocation">C:\Users\ProVaper\Documents\PowerShell\Modules\Recycle\1.5.0</S>
+      <S N="InstalledLocation">C:\Users\uttervitriol\Documents\PowerShell\Modules\Recycle\1.5.0</S>
     </MS>
   </Obj>
 </Objs>
