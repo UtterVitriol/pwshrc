@@ -26,10 +26,9 @@ Set-PSReadLineKeyHandler -Key Ctrl+RightArrow -ScriptBlock {
 Set-PSReadLineKeyHandler -Key Ctrl+y -Function AcceptSuggestion
 
 ##################
-# Ctrl+y Accepts next suggestion.
+# Ctrl+n Accepts next suggestion.
 ##################
 Set-PSReadLineKeyHandler -Key Ctrl+n -Function AcceptNextSuggestionWord
-
 
 ##################
 # Similar to bash ctrl+u.
@@ -91,9 +90,6 @@ Set-Alias -Name ll -Value Hidden
 # wc
 Set-Alias -Name wc -Value Measure-Object
 
-# Move to recycle bin instead of delete
-Set-Alias -Name trash -Value Remove-ItemSafely
-
 # WinDbg
 Set-Alias -Name windbg -Value "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\windbg.exe"
 Set-Alias -Name windbg86 -Value "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\windbg.exe"
@@ -101,9 +97,97 @@ Set-Alias -Name windbg86 -Value "C:\Program Files (x86)\Windows Kits\10\Debugger
 # touch
 Set-Alias -Name touch -Value New-Item
 
-Set-Alias -Name vs -Value devenv
-
 Set-Alias -Name ghidra -Value "C:\Program Files\Ghidra\ghidraRun.bat"
+
+# recycle
+function Send-ToRecycleBin
+{
+    param(
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string[]]$Path
+    )
+
+    process
+    {
+        foreach ($p in $Path)
+        {
+            # Resolve wildcards to full paths
+            Get-Item -Path $p | ForEach-Object {
+                $shell = New-Object -ComObject Shell.Application
+                $shell.Namespace(0).ParseName($_.FullName).InvokeVerb("delete")
+            }
+        }
+    }
+}
+Set-Alias -Name rm -Value Send-ToRecycleBin
+
+function Get-RecycleBin
+{
+    $recycleBin = (New-Object -ComObject Shell.Application).Namespace(10)
+    $recycleBin.Items() | ForEach-Object {
+        [PSCustomObject]@{
+            Name         = $_.Name
+            OriginalPath = $_.ExtendedProperty("OriginalLocation")
+            DeletedDate  = $_.ExtendedProperty("DeletionDate")
+            Size         = $_.Size
+        }
+    }
+}
+
+function Open-RecycleBin
+{
+    Start-Process shell:RecycleBinFolder
+}
+
+function Clear-RecycleBin
+{
+    $shell = New-Object -ComObject Shell.Application
+    $shell.Namespace(10).Items() | ForEach-Object {
+        Remove-Item -Path $_.Path -Recurse -Force -Confirm:$false
+    }
+}
+
+function Remove-RecycleBinItem
+{
+    param(
+        [Parameter(Mandatory)]
+        [string]$Filter
+    )
+
+    $shell = New-Object -ComObject Shell.Application
+    $recycleBin = $shell.Namespace(10)
+
+    $recycleBin.Items() | 
+        Where-Object { $_.Name -like $Filter } | 
+        ForEach-Object {
+            if ($_.IsFolder)
+            {
+                [System.IO.Directory]::Delete($_.Path, $true)
+            } else
+            {
+                [System.IO.File]::Delete($_.Path)
+            }
+        }
+}
+
+function Restore-RecycleBin
+{
+    param(
+        [Parameter(Mandatory)]
+        [string]$Name
+    )
+
+    $shell = New-Object -ComObject Shell.Application
+    $item = $shell.Namespace(10).Items() | Where-Object { $_.Name -eq $Name }
+
+    if ($null -eq $item)
+    {
+        Write-Error "Item '$Name' not found in Recycle Bin."
+        return
+    }
+
+    $item.InvokeVerb("undelete")
+}
 
 ##################
 # Init oh-my-posh
