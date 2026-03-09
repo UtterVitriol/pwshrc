@@ -119,7 +119,7 @@ function Send-ToRecycleBin
         }
     }
 }
-Set-Alias -Name rm -Value Send-ToRecycleBin
+Set-Alias -Name recycle -Value Send-ToRecycleBin
 
 function Get-RecycleBin
 {
@@ -187,6 +187,31 @@ function Restore-RecycleBin
     }
 
     $item.InvokeVerb("undelete")
+}
+
+function Add-StartMenuEntry
+{
+    param(
+        [Parameter(Mandatory)]
+        [string]$BinaryPath,
+        [switch]$AllUsers
+    )
+
+    $name = [System.IO.Path]::GetFileNameWithoutExtension($BinaryPath)
+    $startMenu = if ($AllUsers)
+    {
+        "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
+    } else
+    {
+        "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
+    }
+
+    $shell = New-Object -ComObject WScript.Shell
+    $shortcut = $shell.CreateShortcut("$startMenu\$name.lnk")
+    $shortcut.TargetPath = $BinaryPath
+    $shortcut.Description = $name
+    $shortcut.WorkingDirectory = Split-Path $BinaryPath
+    $shortcut.Save()
 }
 
 ##################
